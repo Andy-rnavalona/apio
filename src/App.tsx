@@ -1,14 +1,10 @@
 import './App.css'
-import { Button } from './components/ui/button'
+import LoginPage from './features/login/pages/login'
 
 function App() {
 
   return (
-    <>
-      <div>
-        <Button>Salut</Button>
-      </div>
-    </>
+    <LoginPage />
   )
 }
 
