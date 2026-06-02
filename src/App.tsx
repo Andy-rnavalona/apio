@@ -1,7 +1,8 @@
+import './App.css'
+import LoginPage from './features/login/pages/login'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import RootLayout from '@/layouts/RootLayout'
 import { HomePage } from '@/features/home'
-import { LoginPage } from '@/features/auth'
 import NotFoundPage from '@/pages/NotFoundPage'
 import { paths } from '@/routes/paths'
 
