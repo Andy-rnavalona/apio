@@ -1,0 +1,191 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider        = "prisma-client"
+  output          = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+enum PredictionStatus {
+  PENDING
+  GENERATED
+  FAILED
+}
+
+model User {
+  id           String        @id @default(uuid())
+  email        String        @unique
+  passwordHash String
+  username     String
+  exercises    Exercise[]
+  categories   Category[]
+  transactions Transaction[]
+  budgets      Budget[]
+  predictions  Prediction[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Exercise {
+  id   String @id @default(uuid())
+  name String
+
+  startDate DateTime
+  endDate   DateTime
+
+  isActive Boolean @default(false)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  transactions Transaction[]
+  budgets      Budget[]
+  predictions  Prediction[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model Category {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  subCategories SubCategory[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, name])
+}
+
+model SubCategory {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  transactions Transaction[]
+  budgets      Budget[]
+  predictions  Prediction[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([categoryId, name])
+}
+
+model Transaction {
+  id String @id @default(uuid())
+
+  title       String
+  description String?
+
+  amount Decimal @db.Decimal(14, 2)
+
+  transactionAt DateTime
+
+  type TransactionType
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  exerciseId String
+  exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+
+  subCategoryId String?
+  subCategory   SubCategory? @relation(fields: [subCategoryId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([exerciseId])
+  @@index([transactionAt])
+  @@index([subCategoryId])
+}
+
+model Budget {
+  id String @id @default(uuid())
+
+  amount Decimal @db.Decimal(14, 2)
+
+  month Int
+  year  Int
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  exerciseId String
+  exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+
+  subCategoryId String
+  subCategory   SubCategory @relation(fields: [subCategoryId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([subCategoryId, month, year, exerciseId])
+}
+
+model Prediction {
+  id String @id @default(uuid())
+
+  targetMonth Int
+  targetYear  Int
+
+  predictedAmount Decimal @db.Decimal(14, 2)
+
+  confidenceScore Float?
+
+  status PredictionStatus @default(PENDING)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  exerciseId String
+  exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+
+  subCategoryId String
+  subCategory   SubCategory @relation(fields: [subCategoryId], references: [id], onDelete: Cascade)
+
+  generatedAt DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@index([targetMonth, targetYear])
+}
+
+model PredictionHistory {
+  id String @id @default(uuid())
+
+  month Int
+  year  Int
+
+  predictedAmount Decimal  @db.Decimal(14, 2)
+  actualAmount    Decimal? @db.Decimal(14, 2)
+
+  userId        String
+  exerciseId    String
+  subCategoryId String
+
+  createdAt DateTime @default(now())
+}
