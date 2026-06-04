@@ -10,7 +10,7 @@ function RootLayout() {
     return (
         <div className="min-h-screen">
             <FloatingSidebar />
-            <div>
+            <div className="ml-20 min-h-screen py-2 px-5 flex">
                 <Outlet />
             </div>
         </div>
