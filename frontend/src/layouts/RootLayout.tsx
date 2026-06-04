@@ -1,4 +1,5 @@
-import { Outlet } from 'react-router'
+import { FloatingSidebar } from "@/components/layout/sidebar";
+import { Outlet } from "react-router";
 
 /**
  * Layout racine partagé par toutes les routes.
@@ -6,14 +7,14 @@ import { Outlet } from 'react-router'
  * <Outlet /> rend la route enfant active.
  */
 function RootLayout() {
-  return (
-    <div className="min-h-screen">
-      <span>SideBar</span>
-      <div>
-        <Outlet />
-      </div>
-    </div>
-  )
+    return (
+        <div className="min-h-screen">
+            <FloatingSidebar />
+            <div className="ml-20 min-h-screen py-2 px-5 flex">
+                <Outlet />
+            </div>
+        </div>
+    );
 }
 
-export default RootLayout
+export default RootLayout;

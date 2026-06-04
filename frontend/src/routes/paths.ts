@@ -6,4 +6,5 @@
 export const paths = {
   home: '/',
   login: '/login',
+  transaction:'/transaction'
 } as const
