@@ -1,5 +1,5 @@
-import { Exercice } from "../types/exercice.types";
-import { ExerciceCard } from "./ExerciceCard";
+import { type Exercice } from "../types/type.ts";
+import { ExerciceCard } from "./exercice-card.tsx";
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
 

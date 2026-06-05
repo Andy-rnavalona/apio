@@ -6,5 +6,6 @@
 export const paths = {
   home: '/',
   login: '/login',
-  transaction:'/transaction'
+  transaction:'/transaction',
+  exercise: '/exercise'
 } as const

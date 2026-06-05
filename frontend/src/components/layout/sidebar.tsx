@@ -118,7 +118,7 @@ type NavItem = {
 const mainNav: NavItem[] = [
     { id: "home", label: "Accueil", icon: icons.home, url: "/" },
     { id: "layers", label: "Exercise", icon: icons.layers, url: "/exercise" },
-    { id: "chart", label: "Analytiques", icon: icons.chart },
+    { id: "chart", label: "Transaction", icon: icons.chart, url: "/transaction" },
     { id: "inbox", label: "Messages", icon: icons.inbox, badge: 3 },
 ];
 

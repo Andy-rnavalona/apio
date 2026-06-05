@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Exercice } from "../types/exercice.types";
-import { mockExercices } from "../data/exercices.data";
+import { type Exercice } from "../types/type.ts";
+import { mockExercices } from "../data/data.ts"
 
 export interface UseExercicesReturn {
   exercices: Exercice[];

@@ -2,15 +2,13 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { useToast } from "@/hooks/use-toast";
-import { Toaster } from "@/components/ui/toaster";
-
-import { useExercices } from "./hooks/useExercices";
-import { ExercicesHeader } from "./components/ExercicesHeader";
-import { ExercicesKpiStrip } from "./components/ExercicesKpiStrip";
-import { ExercicesGrid } from "./components/ExercicesGrid";
-import { NouvelExerciceDrawer } from "./components/NouvelExerciceDrawer";
-import { Exercice } from "./types/exercice.types";
+import { toast } from "sonner"
+import { useExercices } from "../hooks/use-exercice.tsx";
+import { ExercicesHeader } from "../components/exercice-header.tsx";
+import { ExercicesKpiStrip } from "../components/exercice-skip-trip.tsx";
+import { ExercicesGrid } from "../components/exercice-grid.tsx";
+import { NouvelExerciceDrawer } from "../components/exercice-drawer.tsx";
+import { type Exercice } from "../types/type.ts";
 
 export default function ExercicesPage() {
     const {
@@ -21,12 +19,10 @@ export default function ExercicesPage() {
         cloturer,
     } = useExercices();
     const [drawerOpen, setDrawerOpen] = useState(false);
-    const { toast } = useToast();
 
     function handleInspect(id: string) {
         // Navigate to detail — hook up your router here
-        toast({
-            title: "Inspection",
+        toast.success( "Inspection", {
             description: `Ouverture de l'exercice ${exercices.find((e) => e.id === id)?.name}…`,
         });
     }
@@ -34,8 +30,7 @@ export default function ExercicesPage() {
     function handleCloturer(id: string) {
         cloturer(id);
         const name = exercices.find((e) => e.id === id)?.name ?? "l'exercice";
-        toast({
-            title: `${name} clôturé`,
+        toast.info(`${name} clôturé`,{
             description: "L'exercice a été clôturé avec succès.",
         });
     }
@@ -47,24 +42,23 @@ export default function ExercicesPage() {
         >,
     ) {
         addExercice(data);
-        toast({
-            title: "Exercice créé",
+        toast.success("Exercice créé",{
             description: `${data.name} a été créé avec succès.`,
         });
     }
 
     return (
         <div
-            className="min-h-screen bg-white"
+            className="min-h-screen bg-white w-full"
             style={{ fontFamily: "'DM Sans', 'Geist', system-ui, sans-serif" }}
         >
             <div
                 className={cn(
                     "transition-all duration-300 ease-in-out",
-                    drawerOpen ? "mr-[440px]" : "mr-0",
+                    drawerOpen ? "mr-110" : "mr-0",
                 )}
             >
-                <div className="max-w-[1100px] mx-auto px-8 py-10">
+                <div className="mx-auto px-8 py-10">
                     <ExercicesHeader
                         exerciceCount={exercices.length}
                         onNew={() => setDrawerOpen(true)}
@@ -85,8 +79,6 @@ export default function ExercicesPage() {
                 hasActiveExercice={!!activeExercice}
                 onSubmit={handleCreate}
             />
-
-            <Toaster />
         </div>
     );
 }

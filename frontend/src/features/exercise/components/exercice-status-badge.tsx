@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ExerciceStatus } from "../types/exercice.types";
+import { type ExerciceStatus } from "../types/type.ts";
 
 interface ExerciceStatusBadgeProps {
   status: ExerciceStatus;

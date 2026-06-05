@@ -1,6 +1,6 @@
 export type ExerciceStatus = "actif" | "cloture";
 
-export interface Exercice {
+export interface Exercice  {
   id: string;
   name: string;
   status: ExerciceStatus;

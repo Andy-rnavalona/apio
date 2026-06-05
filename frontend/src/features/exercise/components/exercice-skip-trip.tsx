@@ -1,4 +1,4 @@
-import { Exercice } from "../types/exercice.types";
+import { type Exercice } from "../types/type.ts";
 import { formatAriary } from "../utils/format";
 
 interface ExercicesKpiStripProps {

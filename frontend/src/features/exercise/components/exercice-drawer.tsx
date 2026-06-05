@@ -8,7 +8,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Exercice } from "../types/exercice.types";
+import { type Exercice } from "../types/type.ts";
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
 
@@ -64,7 +64,7 @@ export function NouvelExerciceDrawer({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="right"
-        className="w-[440px] p-0 border-l border-neutral-100 shadow-[-20px_0_60px_rgba(0,0,0,0.04)] bg-white flex flex-col"
+        className="w-110 p-0 border-l border-neutral-100 shadow-[-20px_0_60px_rgba(0,0,0,0.04)] bg-white flex flex-col"
       >
         {/* Header */}
         <SheetHeader className="px-7 pt-7 pb-5 border-b border-neutral-100">
