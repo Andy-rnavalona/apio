@@ -6,6 +6,7 @@ import { HomePage } from "@/features/home";
 import NotFoundPage from "@/pages/NotFoundPage";
 import { paths } from "@/routes/paths";
 import TransactionPage from "./features/transaction/pages/transaction";
+import ExercicesPage from "./features/exercise/page/exercices-page";
 
 const router = createBrowserRouter([
     // Home Page
@@ -13,7 +14,10 @@ const router = createBrowserRouter([
     // Routes applicatives, encapsulées par le RootLayout (SideBar)
     {
         element: <RootLayout />,
-        children: [{ path: paths.transaction, element: <TransactionPage /> }],
+        children: [
+            { path: paths.transaction, element: <TransactionPage /> },
+            { path: paths.exercise, element: <ExercicesPage /> },
+        ],
     },
     // Route login indépendante, hors RootLayout (pas de SideBar)
     { path: paths.login, element: <LoginPage /> },
